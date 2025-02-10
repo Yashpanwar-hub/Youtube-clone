@@ -18,27 +18,54 @@ import {
   Settings,
   Flag,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  User
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   return (
     <aside className="w-64 fixed left-0 top-14 h-[calc(100vh-56px)] overflow-y-auto bg-white">
       <div className="py-2">
         {/* Main Section */}
         <SidebarSection>
-          <SidebarItem icon={Home} text="Home" active />
-          <SidebarItem icon={PlaySquare} text="Shorts" />
-          <SidebarItem icon={Users} text="Subscriptions" />
+          <SidebarItem icon={Home} text="Home" onClick={() => navigate('/')} />
+          <SidebarItem 
+            icon={PlaySquare} 
+            text="Shorts" 
+            onClick={() => navigate('/shorts')}
+          />
+          <SidebarItem 
+            icon={Users} 
+            text="Subscriptions" 
+            onClick={() => navigate('/subscriptions')}
+          />
         </SidebarSection>
 
         {/* You Section */}
         <SidebarSection title="You">
-          <SidebarItem icon={PlayCircle} text="Your Channel" />
-          <SidebarItem icon={History} text="History" />
-          <SidebarItem icon={PlaySquare} text="Your Videos" />
-          <SidebarItem icon={Clock} text="Watch Later" />
-          <SidebarItem icon={ThumbsUp} text="Liked Videos" />
+          <SidebarItem 
+            icon={History} 
+            text="History" 
+            onClick={() => navigate('/history')}
+          />
+          <SidebarItem 
+            icon={User} 
+            text="Your Channel" 
+            onClick={() => navigate('/channel')}
+          />
+          <SidebarItem 
+            icon={Clock} 
+            text="Watch Later" 
+            onClick={() => navigate('/watch-later')}
+          />
+          <SidebarItem 
+            icon={ThumbsUp} 
+            text="Liked Videos" 
+            onClick={() => navigate('/liked-videos')}
+          />
         </SidebarSection>
 
         {/* Subscriptions Section */}
@@ -107,11 +134,14 @@ const SidebarSection = ({ title, children }) => {
   );
 };
 
-const SidebarItem = ({ icon: Icon, text, active }) => {
+const SidebarItem = ({ icon: Icon, text, onClick, active }) => {
   return (
-    <div className={`flex items-center gap-4 px-3 py-2 hover:bg-gray-100 rounded-lg cursor-pointer ${active ? 'font-medium' : ''}`}>
-      {typeof Icon === 'function' ? <Icon /> : <Icon size={20} />}
-      <span className="text-sm">{text}</span>
+    <div 
+      className={`flex items-center gap-4 px-3 py-2 hover:bg-gray-100 rounded-lg cursor-pointer ${active ? 'font-medium' : ''}`}
+      onClick={onClick}
+    >
+      <Icon size={20} />
+      <span>{text}</span>
     </div>
   );
 };

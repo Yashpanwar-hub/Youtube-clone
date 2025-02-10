@@ -1,6 +1,26 @@
 import { Menu, Search, Mic, Video, Bell, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  const handleProfileClick = () => {
+    if (user) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <header className="flex items-center justify-between px-4 h-14 bg-white fixed w-full top-0 z-50">
       <div className="flex items-center gap-4">
@@ -54,8 +74,21 @@ const Header = () => {
         <button className="p-2 hover:bg-gray-100 rounded-full">
           <Bell size={20} />
         </button>
-        <button className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center">
-          <span className="text-sm font-medium">Y</span>
+        <button 
+          onClick={handleProfileClick}
+          className="w-8 h-8 rounded-full overflow-hidden"
+        >
+          {user ? (
+            <img 
+              src={user.avatar} 
+              alt={user.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-purple-500 text-white flex items-center justify-center">
+              <span className="text-sm font-medium">Y</span>
+            </div>
+          )}
         </button>
       </div>
     </header>

@@ -10,3 +10,23 @@
 
   /* ... rest of the CSS code ... */
 }
+
+/* Add to your existing CSS */
+.categories-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+.categories-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gradient overlays for scroll buttons */
+.from-white {
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.to-transparent {
+  background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+}

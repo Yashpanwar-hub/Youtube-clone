@@ -79,50 +79,94 @@ const generatePlaylists = (count) => {
 };
 
 const MainContent = () => {
-  const videos = generateVideos(12); // Generate 12 random videos
-  const playlists = generatePlaylists(4); // Generate 4 random playlists
-
+  const videos = generateVideos(12);
+  const playlists = generatePlaylists(4);
   const categories = [
-    "All", "JavaScript", "Python", "React", "Node.js", "MongoDB",
-    "Web Development", "Data Science", "Machine Learning", "DevOps",
-    "Algorithms", "Computer Science", "Mobile Development", "Game Development"
+    "All", "Music", "Mixes", "Gaming", "Live", "Computer Science", 
+    "Programming", "React", "Node.js", "JavaScript", "Python", 
+    "Algorithms", "Recently uploaded", "New to you"
   ];
 
+  const scrollCategories = (direction) => {
+    const container = document.querySelector('.categories-scroll');
+    const scrollAmount = 200;
+    if (container) {
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <main className="flex-1 pl-64 pt-14 bg-gray-50">
-      {/* Categories */}
-      <div className="sticky top-14 bg-white z-10 border-b">
-        <div className="flex gap-3 px-6 py-3 overflow-x-auto categories-scroll">
-          {categories.map((category, index) => (
+    <main className="flex-1 pl-64 pt-14 bg-[#f9f9f9] overflow-x-hidden">
+      {/* Categories with scroll buttons */}
+      <div className="sticky top-2 bg-white z-10">
+        <div className="relative flex items-center">
+          {/* Left gradient and button */}
+          <div className="absolute left-0 h-full flex items-center bg-gradient-to-r from-white via-white to-transparent z-10 pr-4 pl-6">
             <button 
-              key={index}
-              className={`px-3 py-1 rounded-full text-sm whitespace-nowrap
-                ${index === 0 ? 'bg-black text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
+              onClick={() => scrollCategories('left')}
+              className="p-2 hover:bg-gray-100 rounded-full"
             >
-              {category}
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
-          ))}
+          </div>
+
+          {/* Categories container */}
+          <div className="flex gap-3 py-3 overflow-x-auto categories-scroll mx-16 scroll-smooth">
+            {categories.map((category, index) => (
+              <button 
+                key={index}
+                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap flex-shrink-0
+                  ${index === 0 
+                    ? 'bg-black text-white' 
+                    : 'bg-[#f2f2f2] hover:bg-[#e5e5e5] text-[#0f0f0f]'}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Right gradient and button */}
+          <div className="absolute right-0 h-full flex items-center bg-gradient-to-l from-white via-white to-transparent z-10 pl-4 pr-6">
+            <button 
+              onClick={() => scrollCategories('right')}
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
+        {/* Bottom border */}
+        <div className="h-[1px] bg-[#e5e5e5]"></div>
       </div>
 
-      {/* Playlists Section */}
-      <section className="p-6 border-b">
-        <h2 className="text-xl font-medium mb-4">Popular Playlists</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {playlists.map(playlist => (
-            <PlaylistCard key={playlist.id} {...playlist} />
-          ))}
-        </div>
-      </section>
+      {/* Content container with proper overflow handling */}
+      <div className="overflow-x-hidden">
+        {/* Playlists Section */}
+        <section className="p-6 border-b border-[#e5e5e5]">
+          <h2 className="text-xl font-medium mb-4 text-[#0f0f0f]">Popular Playlists</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {playlists.map(playlist => (
+              <PlaylistCard key={playlist.id} {...playlist} />
+            ))}
+          </div>
+        </section>
 
-      {/* Videos Grid */}
-      <section className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {videos.map(video => (
-            <VideoCard key={video.id} {...video} />
-          ))}
-        </div>
-      </section>
+        {/* Videos Grid */}
+        <section className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {videos.map(video => (
+              <VideoCard key={video.id} {...video} />
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 };
