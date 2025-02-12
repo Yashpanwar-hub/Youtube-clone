@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Shorts from './pages/Shorts';
 import History from './pages/History';
 import YourChannel from './pages/YourChannel';
+import VideoUpload from './components/VideoUpload';
 import './styles/globals.css';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/upload" element={<VideoUpload />} />
           </Routes>
         </div>
       </div>

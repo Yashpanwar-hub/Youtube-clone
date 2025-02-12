@@ -68,7 +68,10 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        <button className="p-2 hover:bg-gray-100 rounded-full">
+        <button 
+          onClick={() => navigate('/upload')}
+          className="p-2 hover:bg-gray-100 rounded-full"
+        >
           <Video size={20} />
         </button>
         <button className="p-2 hover:bg-gray-100 rounded-full">
